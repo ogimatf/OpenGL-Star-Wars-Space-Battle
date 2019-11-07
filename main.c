@@ -1,0 +1,128 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "draw.h"
+
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <GL/glut.h>
+
+static void on_display(void);
+static void on_reshape(int width, int height);
+static void on_keyboard(unsigned char key, int x, int y);
+
+static int window_width, window_height;
+static int h, v = 0;
+
+
+int main(int argc, char** argv){
+
+	/*inicijalizacija biblioteke i prozora*/
+	glutInit(&argc, argv);
+
+	glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
+
+	glutInitWindowSize(800, 600);
+	glutInitWindowPosition(100, 100);
+
+	glutCreateWindow(argv[0]);
+
+	glutFullScreen();
+
+	glutDisplayFunc(on_display);
+	glutReshapeFunc(on_reshape);
+	glutKeyboardFunc(on_keyboard);
+
+	/*prostor za timer funkciju*/
+
+	/*osvetljenje*/
+	GLfloat light_ambient[] = {0.2, 0.2, 0.2, 1};
+	GLfloat light_diffuse[] = {1, 1, 1, 1};
+	GLfloat light_specular[] = {1, 1, 1, 1};
+
+	GLfloat model_ambient[] = {1, 1, 1, 0};
+
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+
+	GLfloat light_position[] = {1, 1, 1, 0};
+
+	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, model_ambient);
+
+    glEnable(GL_NORMALIZE);
+
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+
+    glClearColor(0, 0, 0, 0);
+    glEnable(GL_DEPTH_TEST);
+    glLineWidth(2);
+
+    glutMainLoop();
+
+    return 0;
+}
+
+void on_display(){
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	static GLfloat light_position[] = {0, 0.5, -2.5, 0};
+	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+
+	glMatrixMode(GL_MODELVIEW);
+
+	glLoadIdentity();
+
+	gluLookAt(0, 8, 10, 0, 0, 0, 0, 1, 0);
+
+	glRotatef(0+10*h, 0, 1, 0);
+    glRotatef(0+10*v, 0, 0, 1);
+
+    draw_xwing();
+
+	glutSwapBuffers();
+}
+
+static void on_reshape(int width, int height){
+
+	glViewport(0, 0, width, height);
+
+	glMatrixMode(GL_PROJECTION);
+
+	glLoadIdentity();
+
+	gluPerspective(60, (float) width / height, 0.01, 1500);
+
+	window_width = width;
+	window_height = height;
+}
+
+static void on_keyboard(unsigned char key, int x, int y)
+{
+    switch (key) {
+    case 27:
+    	/*na esc se prekida program*/
+        exit(0);
+        break;
+    case 'h':
+        h-=1;
+        glutPostRedisplay();
+        break;
+    case 'j':
+        h+=1;
+        glutPostRedisplay();
+        break;
+    case 'u':
+        v+=1;
+        glutPostRedisplay();
+        break;
+    case 'n':
+        v-=1;
+        glutPostRedisplay();
+        break;
+    }
+}
