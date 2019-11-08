@@ -13,7 +13,7 @@ static void on_reshape(int width, int height);
 static void on_keyboard(unsigned char key, int x, int y);
 
 static int window_width, window_height;
-static int h, v = 0;
+static int h, v = 0;/*za razgledanje*/
 
 
 int main(int argc, char** argv){
@@ -37,11 +37,11 @@ int main(int argc, char** argv){
 	/*prostor za timer funkciju*/
 
 	/*osvetljenje*/
-	GLfloat light_ambient[] = {0.2, 0.2, 0.2, 1};
-	GLfloat light_diffuse[] = {1, 1, 1, 1};
+	GLfloat light_ambient[] = {0.3, 0.3, 0.3, 0.7};
+	GLfloat light_diffuse[] = {0.5, 0.5, 0.5, 0.7};
 	GLfloat light_specular[] = {1, 1, 1, 1};
 
-	GLfloat model_ambient[] = {1, 1, 1, 0};
+	//GLfloat model_ambient[] = {1, 1, 1, 0};
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
@@ -51,13 +51,14 @@ int main(int argc, char** argv){
 	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
     glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
-    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, model_ambient);
+    glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, 0);
 
     glEnable(GL_NORMALIZE);
 
     glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 
-    glClearColor(0, 0, 0, 0);
+    glEnable(GL_COLOR_MATERIAL);
+
     glEnable(GL_DEPTH_TEST);
     glLineWidth(2);
 
@@ -70,19 +71,22 @@ void on_display(){
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	static GLfloat light_position[] = {0, 0.5, -2.5, 0};
+	static GLfloat light_position[] = {-5, 5, -1, 0};
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 
 	glMatrixMode(GL_MODELVIEW);
 
 	glLoadIdentity();
 
-	gluLookAt(0, 8, 10, 0, 0, 0, 0, 1, 0);
+	gluLookAt(0, 6, 10, 0, 0, 0, 0, 1, 0);
 
 	glRotatef(0+10*h, 0, 1, 0);
     glRotatef(0+10*v, 0, 0, 1);
 
     draw_xwing();
+
+    glRotatef(-0+10*h, 0, 1, 0);
+    glRotatef(-0+10*v, 0, 0, 1);
 
 	glutSwapBuffers();
 }
