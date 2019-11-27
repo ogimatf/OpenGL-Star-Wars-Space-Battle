@@ -878,3 +878,437 @@ void draw_xwing(){
         glScalef(2, 2, 2);
         glTranslatef(0, 0, -5);
 }
+
+
+
+
+
+
+
+
+void draw_stardestroyer(){
+
+    glTranslatef(-0.1, 0, -15);
+
+    glScalef(2, 2, 2);
+
+    glRotatef(-40, 0, 1, 0);
+
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glBegin(GL_POLYGON);
+            glColor3f(0.8, 0.8, 0.8);
+            glVertex3f(0, 0.8, -2);
+            glVertex3f(3, 0.05, -1.25);
+            glVertex3f(3, 0, -1.25);
+            glVertex3f(0, 0, -2);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+            glColor3f(0.8, 0.8, 0.8);
+            glVertex3f(3, 0.05, -1.25);
+            glVertex3f(0, 0.05, 4);
+            glVertex3f(0, 0, 4);
+            glVertex3f(3, 0, -1.25);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+            glColor3f(0.8, 0.8, 0.8);
+            glVertex3f(0, 0.05, 4);
+            glVertex3f(0, 0.8, -2);
+            glVertex3f(0, 0, -2);
+            glVertex3f(0, 0, 4);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+            glColor3f(0.8, 0.8, 0.8);
+            glVertex3f(0, 0.8, -2);
+            glVertex3f(3, 0.05, -1.25);
+            glVertex3f(0, 0.05, 4);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+            glColor3f(0.8, 0.8, 0.8);
+            glVertex3f(0, 0, -2);
+            glVertex3f(3, 0, -1.25);
+            glVertex3f(0, 0, 4);
+        glEnd();
+
+    /*gore desno*/
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glBegin(GL_POLYGON);
+            glColor3f(0.8, 0.8, 0.8);
+            glVertex3f(0, 0.8, -2);
+            glVertex3f(-3, 0.05, -1.25);
+            glVertex3f(-3, 0, -1.25);
+            glVertex3f(0, 0, -2);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+            glColor3f(0.8, 0.8, 0.8);
+            glVertex3f(-3, 0.05, -1.25);
+            glVertex3f(0, 0.05, 4);
+            glVertex3f(0, 0, 4);
+            glVertex3f(-3, 0, -1.25);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+            glColor3f(0.8, 0.8, 0.8);
+            glVertex3f(0, 0.05, 4);
+            glVertex3f(0, 0.8, -2);
+            glVertex3f(0, 0, -2);
+            glVertex3f(0, 0, 4);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+            glColor3f(0.8, 0.8, 0.8);
+            glVertex3f(0, 0.8, -2);
+            glVertex3f(-3, 0.05, -1.25);
+            glVertex3f(0, 0.05, 4);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+            glColor3f(0.8, 0.8, 0.8);
+            glVertex3f(0, 0, -2);
+            glVertex3f(-3, 0, -1.25);
+            glVertex3f(0, 0, 4);
+        glEnd();
+
+    /*dole desno*/
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glBegin(GL_POLYGON);
+            glColor3f(0.8, 0.8, 0.8);
+            glVertex3f(0, -0.8, -2);
+            glVertex3f(3, -0.05, -1.25);
+            glVertex3f(3, 0, -1.25);
+            glVertex3f(0, 0, -2);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+            glColor3f(0.8, 0.8, 0.8);
+            glVertex3f(3, -0.05, -1.25);
+            glVertex3f(0, -0.05, 4);
+            glVertex3f(0, 0, 4);
+            glVertex3f(3, 0, -1.25);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+            glColor3f(0.8, 0.8, 0.8);
+            glVertex3f(0, -0.05, 4);
+            glVertex3f(0, -0.8, -2);
+            glVertex3f(0, 0, -2);
+            glVertex3f(0, 0, 4);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+            glColor3f(0.8, 0.8, 0.8);
+            glVertex3f(0, -0.8, -2);
+            glVertex3f(3, -0.05, -1.25);
+            glVertex3f(0, -0.05, 4);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+            glColor3f(0.8, 0.8, 0.8);
+            glVertex3f(0, 0, -2);
+            glVertex3f(3, 0, -1.25);
+            glVertex3f(0, 0, 4);
+        glEnd();
+
+    /*dole levo*/
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glBegin(GL_POLYGON);
+            glColor3f(0.8, 0.8, 0.8);
+            glVertex3f(0, -0.8, -2);
+            glVertex3f(-3, -0.05, -1.25);
+            glVertex3f(-3, 0, -1.25);
+            glVertex3f(0, 0, -2);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+            glColor3f(0.8, 0.8, 0.8);
+            glVertex3f(-3, -0.05, -1.25);
+            glVertex3f(0, -0.05, 4);
+            glVertex3f(0, 0, 4);
+            glVertex3f(-3, 0, -1.25);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+            glColor3f(0.8, 0.8, 0.8);
+            glVertex3f(0, -0.05, 4);
+            glVertex3f(0, -0.8, -2);
+            glVertex3f(0, 0, -2);
+            glVertex3f(0, 0, 4);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+            glColor3f(0.8, 0.8, 0.8);
+            glVertex3f(0, -0.8, -2);
+            glVertex3f(-3, -0.05, -1.25);
+            glVertex3f(0, -0.05, 4);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+            glColor3f(0.8, 0.8, 0.8);
+            glVertex3f(0, 0, -2);
+            glVertex3f(-3, 0, -1.25);
+            glVertex3f(0, 0, 4);
+        glEnd();
+
+    /*telo broda desno*/
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glBegin(GL_POLYGON);
+            glColor3f(0.75, 0.75, 0.75);
+            glVertex3f(0, 1, -1.8);
+            glVertex3f(1.5, 0.55, -1.45);
+            glVertex3f(1.5, 0, -1.45);
+            glVertex3f(0, 0, -1.8);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+            glColor3f(0.75, 0.75, 0.75);
+            glVertex3f(0, 0.55, 1);
+            glVertex3f(0.75, 0.45, 1);
+            glVertex3f(0.75, 0, 1);
+            glVertex3f(0, 0, 1);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+            glColor3f(0.75, 0.75, 0.75);
+            glVertex3f(1.5, 0.55, -1.45);
+            glVertex3f(1.5, 0, -1.45);
+            glVertex3f(0.75, 0, 1);
+            glVertex3f(0.75, 0.45, 1);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+            glColor3f(0.75, 0.75, 0.75);
+            glVertex3f(1.5, 0.55, -1.45);
+            glVertex3f(0, 1, -1.8);
+            glVertex3f(0, 0.55, 1);
+            glVertex3f(0.75, 0.45, 1);
+        glEnd();
+
+    /*telo broda levo*/
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glBegin(GL_POLYGON);
+            glColor3f(0.75, 0.75, 0.75);
+            glVertex3f(0, 1, -1.8);
+            glVertex3f(-1.5, 0.55, -1.45);
+            glVertex3f(-1.5, 0, -1.45);
+            glVertex3f(0, 0, -1.8);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+            glColor3f(0.75, 0.75, 0.75);
+            glVertex3f(0, 0.55, 1);
+            glVertex3f(-0.75, 0.45, 1);
+            glVertex3f(-0.75, 0, 1);
+            glVertex3f(0, 0, 1);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+            glColor3f(0.75, 0.75, 0.75);
+            glVertex3f(-1.5, 0.55, -1.45);
+            glVertex3f(-1.5, 0, -1.45);
+            glVertex3f(-0.75, 0, 1);
+            glVertex3f(-0.75, 0.45, 1);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+            glColor3f(0.75, 0.75, 0.75);
+            glVertex3f(-1.5, 0.55, -1.45);
+            glVertex3f(0, 1, -1.8);
+            glVertex3f(0, 0.55, 1);
+            glVertex3f(-0.75, 0.45, 1);
+        glEnd();
+
+    /*telo broda visi deo*/
+    /*telo broda visi desno*/
+
+    /*glPopMatrix();*/
+
+    glTranslatef(0, 0.1, 0);
+
+    glTranslatef(0, 0.2, -0.2);
+    glScalef(0.8, 0.8, 0.8);
+
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glBegin(GL_POLYGON);
+            glColor3f(0.7, 0.7, 0.7);
+            glVertex3f(0, 1, -1.8);
+            glVertex3f(1.5, 0.55, -1.45);
+            glVertex3f(1.5, 0, -1.45);
+            glVertex3f(0, 0, -1.8);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+            glColor3f(0.7, 0.7, 0.7);
+            glVertex3f(0, 0.55, 1);
+            glVertex3f(0.75, 0.45, 1);
+            glVertex3f(0.75, 0, 1);
+            glVertex3f(0, 0, 1);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+            glColor3f(0.7, 0.7, 0.7);
+            glVertex3f(1.5, 0.55, -1.45);
+            glVertex3f(1.5, 0, -1.45);
+            glVertex3f(0.75, 0, 1);
+            glVertex3f(0.75, 0.45, 1);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+            glColor3f(0.7, 0.7, 0.7);
+            glVertex3f(1.5, 0.55, -1.45);
+            glVertex3f(0, 1, -1.8);
+            glVertex3f(0, 0.55, 1);
+            glVertex3f(0.75, 0.45, 1);
+        glEnd();
+
+    /*telo broda visi levo*/
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glBegin(GL_POLYGON);
+            glColor3f(0.7, 0.7, 0.7);
+            glVertex3f(0, 1, -1.8);
+            glVertex3f(-1.5, 0.55, -1.45);
+            glVertex3f(-1.5, 0, -1.45);
+            glVertex3f(0, 0, -1.8);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+            glColor3f(0.7, 0.7, 0.7);
+            glVertex3f(0, 0.55, 1);
+            glVertex3f(-0.75, 0.45, 1);
+            glVertex3f(-0.75, 0, 1);
+            glVertex3f(0, 0, 1);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+            glColor3f(0.7, 0.7, 0.7);
+            glVertex3f(-1.5, 0.55, -1.45);
+            glVertex3f(-1.5, 0, -1.45);
+            glVertex3f(-0.75, 0, 1);
+            glVertex3f(-0.75, 0.45, 1);
+        glEnd();
+
+        glBegin(GL_POLYGON);
+            glColor3f(0.7, 0.7, 0.7);
+            glVertex3f(-1.5, 0.55, -1.45);
+            glVertex3f(0, 1, -1.8);
+            glVertex3f(0, 0.55, 1);
+            glVertex3f(-0.75, 0.45, 1);
+        glEnd();
+
+    glScalef(1.25, 1.25, 1.25);
+    glTranslatef(0, -0.2, 0.2);
+
+    glTranslatef(0, -0.1, 0);
+
+    /*glPushMatrix();*/
+
+    /*toranj*/
+
+    glTranslatef(0, 1.5, -1.2);
+
+    /*telo tornja desno*/
+    glBegin(GL_POLYGON);
+        glColor3f(0.5, 0.5, 0.5);
+        glVertex3f(0, 0.2, 0.3);
+        glVertex3f(0, -0.2, 0.3);
+        glVertex3f(0.8, -0.1, 0.3);
+        glVertex3f(0.8, 0.1, 0.3);
+    glEnd();
+
+    glBegin(GL_POLYGON);
+        glColor3f(0.5, 0.5, 0.5); 
+        glVertex3f(0.8, 0.1, -0.3);
+        glVertex3f(0.8, -0.1, -0.3);
+        glVertex3f(0, -0.2, -0.3);
+        glVertex3f(0, 0.2, -0.3);
+    glEnd();
+
+    glBegin(GL_POLYGON);
+        glColor3f(0.5, 0.5, 0.5); 
+        glVertex3f(0.8, 0.1, -0.3);
+        glVertex3f(0, 0.2, -0.3);
+        glVertex3f(0, 0.2, 0.3);
+        glVertex3f(0.8, 0.1, 0.3);
+    glEnd();
+
+    glBegin(GL_POLYGON);
+        glColor3f(0.5, 0.5, 0.5);
+        glVertex3f(0.8, -0.1, 0.3);
+        glVertex3f(0, -0.2, 0.3);
+        glVertex3f(0, -0.2, -0.3);
+        glVertex3f(0.8, -0.1, -0.3);
+    glEnd();
+
+    glBegin(GL_POLYGON);
+        glColor3f(0.5, 0.5, 0.5); 
+        glVertex3f(0.8, 0.1, 0.3);
+        glVertex3f(0.8, -0.1, 0.3);
+        glVertex3f(0.8, -0.1, -0.3);
+        glVertex3f(0.8, 0.1, 0.3);
+    glEnd();
+
+    /*telo tornja levo*/
+
+    glRotatef(180, 0, 1, 0);
+    glBegin(GL_POLYGON);
+        glColor3f(0.5, 0.5, 0.5);
+        glVertex3f(0, 0.2, 0.3);
+        glVertex3f(0, -0.2, 0.3);
+        glVertex3f(0.8, -0.1, 0.3);
+        glVertex3f(0.8, 0.1, 0.3);
+    glEnd();
+
+    glBegin(GL_POLYGON);
+        glColor3f(0.5, 0.5, 0.5); 
+        glVertex3f(0.8, 0.1, -0.3);
+        glVertex3f(0.8, -0.1, -0.3);
+        glVertex3f(0, -0.2, -0.3);
+        glVertex3f(0, 0.2, -0.3);
+    glEnd();
+
+    glBegin(GL_POLYGON);
+        glColor3f(0.5, 0.5, 0.5);  
+        glVertex3f(0.8, 0.1, -0.3);
+        glVertex3f(0, 0.2, -0.3);
+        glVertex3f(0, 0.2, 0.3);
+        glVertex3f(0.8, 0.1, 0.3);
+    glEnd();
+
+    glBegin(GL_POLYGON);
+        glColor3f(0.5, 0.5, 0.5); 
+        glVertex3f(0.8, -0.1, 0.3);
+        glVertex3f(0, -0.2, 0.3);
+        glVertex3f(0, -0.2, -0.3);
+        glVertex3f(0.8, -0.1, -0.3);
+    glEnd();
+
+    glBegin(GL_POLYGON);
+        glColor3f(0.5, 0.5, 0.5); 
+        glVertex3f(0.8, 0.1, 0.3);
+        glVertex3f(0.8, -0.1, 0.3);
+        glVertex3f(0.8, -0.1, -0.3);
+        glVertex3f(0.8, 0.1, 0.3);
+    glEnd();
+    glRotatef(-180, 0, 1, 0);
+
+    /*stub tornja*/
+    glRotatef(90, 1, 0, 0);
+    glColor3f(0.8, 0.8, 0.8);
+    GLUquadric* gluCylTower = gluNewQuadric();
+    gluQuadricTexture(gluCylTower, GLU_TRUE);
+    gluQuadricDrawStyle(gluCylTower, GLU_FILL);
+    gluCylinder(gluCylTower, 0.2, 0.2, 1, 10, 10);
+    glRotatef(-90, 1, 0, 0);
+
+    glTranslatef(0, -1.5, 1.2);
+
+    glRotatef(40, 0, 1, 0);
+    
+    glScalef(0.5, 0.5, 0.5);
+
+    glTranslatef(0.1, 0, 15);
+
+}

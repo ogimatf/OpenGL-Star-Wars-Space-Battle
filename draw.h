@@ -2,5 +2,6 @@
 #define _DRAW_H_
 
 void draw_xwing();
+void draw_stardestroyer();
 
 #endif
