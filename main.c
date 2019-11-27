@@ -83,6 +83,8 @@ void on_display(){
 	glRotatef(0+10*h, 0, 1, 0);
     glRotatef(0+10*v, 0, 0, 1);
 
+    draw_track();
+
     draw_xwing();
 
     draw_stardestroyer();

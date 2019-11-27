@@ -7,6 +7,43 @@
 #include <GL/glu.h>
 #include <GL/glut.h>
 
+void draw_track(){
+
+    glColor3f(1, 1, 1);
+    glPushMatrix();
+        glBegin(GL_QUADS);
+                glVertex3f(-1.9, -1, -15);
+                glVertex3f(-1.875, -1, -15);
+                glVertex3f(-1.875, -1, 10);
+                glVertex3f(-1.9, -1, 10);
+        glEnd();
+
+        glBegin(GL_QUADS);
+                glVertex3f(1.9, -1, -15);
+                glVertex3f(1.875, -1, -15);
+                glVertex3f(1.875, -1, 10);
+                glVertex3f(1.9, -1, 10);
+        glEnd();
+
+        glBegin(GL_QUADS);
+                glVertex3f(5.7, -1, -15);
+                glVertex3f(5.675, -1, -15);
+                glVertex3f(5.675, -1, 10);
+                glVertex3f(5.7, -1, 10);
+        glEnd();
+
+        glBegin(GL_QUADS);
+                glVertex3f(-5.7, -1, -15);
+                glVertex3f(-5.675, -1, -15);
+                glVertex3f(-5.675, -1, 10);
+                glVertex3f(-5.7, -1, 10);
+        glEnd();
+
+    glPopMatrix();
+
+}
+
+
 void draw_xwing(){
 
     glTranslatef(0, 0, 5);
@@ -884,13 +921,11 @@ void draw_xwing(){
 
 
 
-
-
 void draw_stardestroyer(){
 
     glTranslatef(-0.1, 0, -15);
 
-    glScalef(2, 2, 2);
+    glScalef(2.5, 2.5, 2.5);
 
     glRotatef(-40, 0, 1, 0);
 
@@ -1307,7 +1342,7 @@ void draw_stardestroyer(){
 
     glRotatef(40, 0, 1, 0);
     
-    glScalef(0.5, 0.5, 0.5);
+    glScalef(0.4, 0.4, 0.4);
 
     glTranslatef(0.1, 0, 15);
 

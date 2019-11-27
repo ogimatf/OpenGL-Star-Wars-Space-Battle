@@ -3,5 +3,6 @@
 
 void draw_xwing();
 void draw_stardestroyer();
+void draw_track();
 
 #endif
