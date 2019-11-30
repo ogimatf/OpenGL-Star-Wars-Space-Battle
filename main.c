@@ -11,9 +11,16 @@
 static void on_display(void);
 static void on_reshape(int width, int height);
 static void on_keyboard(unsigned char key, int x, int y);
+static void on_special_key_press(int key, int x, int y);
+//static void on_timer();
+
+/*void left();
+void right();*/
 
 static int window_width, window_height;
 static int h, v = 0;/*za razgledanje*/
+
+int g_game_active = 0;
 
 
 int main(int argc, char** argv){
@@ -33,6 +40,10 @@ int main(int argc, char** argv){
 	glutDisplayFunc(on_display);
 	glutReshapeFunc(on_reshape);
 	glutKeyboardFunc(on_keyboard);
+    glutSpecialFunc(on_special_key_press);
+    glutSetCursor(GLUT_CURSOR_NONE);
+
+    //glutTimerFunc(10, on_timer(), 0);
 
 	/*prostor za timer funkciju*/
 
@@ -46,7 +57,7 @@ int main(int argc, char** argv){
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 
-	GLfloat light_position[] = {1, 1, 1, 0};
+	GLfloat light_position[] = {-3, 10, -4, 0};
 
 	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
@@ -133,4 +144,19 @@ static void on_keyboard(unsigned char key, int x, int y)
         glutPostRedisplay();
         break;
     }
+}
+
+static void on_special_key_press(int key, int x, int y){
+/*
+    switch(key){
+        case GLUT_KEY_LEFT:
+            if(g_game_active)
+                left();
+            break;
+        case GLUT_KEY_RIGHT:
+            if(g_game_active)
+                right();
+            break;
+    }
+*/
 }

@@ -154,6 +154,7 @@ void draw_xwing(){
     glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);/*wired polygon*/
     glBegin(GL_POLYGON);
             glColor3f(0.8, 0.8, 0.8);
+            glNormal3f(-1, 2, 0);
             glVertex3f(0, -0.1, 0.2);
             glVertex3f(0, -0.1, 1.1);
             glVertex3f(0, 0.2, 1.1);
@@ -929,6 +930,8 @@ void draw_stardestroyer(){
 
     glRotatef(-40, 0, 1, 0);
 
+    /*telo*/
+    /*gore levo*/
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         glBegin(GL_POLYGON);
             glColor3f(0.8, 0.8, 0.8);
@@ -939,7 +942,8 @@ void draw_stardestroyer(){
         glEnd();
 
         glBegin(GL_POLYGON);
-            glColor3f(0.8, 0.8, 0.8);
+            glColor3f(0.5, 0.5, 0.5);
+            glNormal3f(-0.5, 0, 0.5);
             glVertex3f(3, 0.05, -1.25);
             glVertex3f(0, 0.05, 4);
             glVertex3f(0, 0, 4);
@@ -956,6 +960,7 @@ void draw_stardestroyer(){
 
         glBegin(GL_POLYGON);
             glColor3f(0.8, 0.8, 0.8);
+            glNormal3f(-0.3, 0.7, 0);
             glVertex3f(0, 0.8, -2);
             glVertex3f(3, 0.05, -1.25);
             glVertex3f(0, 0.05, 4);
@@ -979,7 +984,8 @@ void draw_stardestroyer(){
         glEnd();
 
         glBegin(GL_POLYGON);
-            glColor3f(0.8, 0.8, 0.8);
+            glColor3f(0.5, 0.5, 0.5);
+            glNormal3f(-0.5, 0, 0.5);
             glVertex3f(-3, 0.05, -1.25);
             glVertex3f(0, 0.05, 4);
             glVertex3f(0, 0, 4);
@@ -996,6 +1002,7 @@ void draw_stardestroyer(){
 
         glBegin(GL_POLYGON);
             glColor3f(0.8, 0.8, 0.8);
+            glNormal3f(0.3, 0.7, 0);
             glVertex3f(0, 0.8, -2);
             glVertex3f(-3, 0.05, -1.25);
             glVertex3f(0, 0.05, 4);
@@ -1019,7 +1026,8 @@ void draw_stardestroyer(){
         glEnd();
 
         glBegin(GL_POLYGON);
-            glColor3f(0.8, 0.8, 0.8);
+            glColor3f(0.5, 0.5, 0.5);
+            glNormal3f(-0.5, 0, 0.5);
             glVertex3f(3, -0.05, -1.25);
             glVertex3f(0, -0.05, 4);
             glVertex3f(0, 0, 4);
@@ -1059,7 +1067,8 @@ void draw_stardestroyer(){
         glEnd();
 
         glBegin(GL_POLYGON);
-            glColor3f(0.8, 0.8, 0.8);
+            glColor3f(0.5, 0.5, 0.5);
+            glNormal3f(-0.5, 0, 0.5);
             glVertex3f(-3, -0.05, -1.25);
             glVertex3f(0, -0.05, 4);
             glVertex3f(0, 0, 4);
@@ -1091,7 +1100,7 @@ void draw_stardestroyer(){
     /*telo broda desno*/
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         glBegin(GL_POLYGON);
-            glColor3f(0.75, 0.75, 0.75);
+            glColor3f(0.65, 0.65, 0.65);
             glVertex3f(0, 1, -1.8);
             glVertex3f(1.5, 0.55, -1.45);
             glVertex3f(1.5, 0, -1.45);
@@ -1099,7 +1108,8 @@ void draw_stardestroyer(){
         glEnd();
 
         glBegin(GL_POLYGON);
-            glColor3f(0.75, 0.75, 0.75);
+            glColor3f(0.65, 0.65, 0.65);
+            glNormal3f(0, 0, 1);
             glVertex3f(0, 0.55, 1);
             glVertex3f(0.75, 0.45, 1);
             glVertex3f(0.75, 0, 1);
@@ -1107,7 +1117,7 @@ void draw_stardestroyer(){
         glEnd();
 
         glBegin(GL_POLYGON);
-            glColor3f(0.75, 0.75, 0.75);
+            glColor3f(0.65, 0.65, 0.65);
             glVertex3f(1.5, 0.55, -1.45);
             glVertex3f(1.5, 0, -1.45);
             glVertex3f(0.75, 0, 1);
@@ -1116,6 +1126,7 @@ void draw_stardestroyer(){
 
         glBegin(GL_POLYGON);
             glColor3f(0.75, 0.75, 0.75);
+            glNormal3f(-0.3, 0.7, 0);
             glVertex3f(1.5, 0.55, -1.45);
             glVertex3f(0, 1, -1.8);
             glVertex3f(0, 0.55, 1);
@@ -1125,7 +1136,7 @@ void draw_stardestroyer(){
     /*telo broda levo*/
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         glBegin(GL_POLYGON);
-            glColor3f(0.75, 0.75, 0.75);
+            glColor3f(0.65, 0.65, 0.65);
             glVertex3f(0, 1, -1.8);
             glVertex3f(-1.5, 0.55, -1.45);
             glVertex3f(-1.5, 0, -1.45);
@@ -1133,7 +1144,8 @@ void draw_stardestroyer(){
         glEnd();
 
         glBegin(GL_POLYGON);
-            glColor3f(0.75, 0.75, 0.75);
+            glColor3f(0.65, 0.65, 0.65);
+            glNormal3f(0, 0, 1);
             glVertex3f(0, 0.55, 1);
             glVertex3f(-0.75, 0.45, 1);
             glVertex3f(-0.75, 0, 1);
@@ -1141,7 +1153,7 @@ void draw_stardestroyer(){
         glEnd();
 
         glBegin(GL_POLYGON);
-            glColor3f(0.75, 0.75, 0.75);
+            glColor3f(0.65, 0.65, 0.65);
             glVertex3f(-1.5, 0.55, -1.45);
             glVertex3f(-1.5, 0, -1.45);
             glVertex3f(-0.75, 0, 1);
@@ -1150,6 +1162,7 @@ void draw_stardestroyer(){
 
         glBegin(GL_POLYGON);
             glColor3f(0.75, 0.75, 0.75);
+            glNormal3f(0.3, 0.7, 0);
             glVertex3f(-1.5, 0.55, -1.45);
             glVertex3f(0, 1, -1.8);
             glVertex3f(0, 0.55, 1);
@@ -1168,7 +1181,7 @@ void draw_stardestroyer(){
 
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         glBegin(GL_POLYGON);
-            glColor3f(0.7, 0.7, 0.7);
+            glColor3f(0.65, 0.65, 0.65);
             glVertex3f(0, 1, -1.8);
             glVertex3f(1.5, 0.55, -1.45);
             glVertex3f(1.5, 0, -1.45);
@@ -1176,7 +1189,8 @@ void draw_stardestroyer(){
         glEnd();
 
         glBegin(GL_POLYGON);
-            glColor3f(0.7, 0.7, 0.7);
+            glColor3f(0.65, 0.65, 0.65);
+            glNormal3f(0, 0, 1);
             glVertex3f(0, 0.55, 1);
             glVertex3f(0.75, 0.45, 1);
             glVertex3f(0.75, 0, 1);
@@ -1184,7 +1198,7 @@ void draw_stardestroyer(){
         glEnd();
 
         glBegin(GL_POLYGON);
-            glColor3f(0.7, 0.7, 0.7);
+            glColor3f(0.65, 0.65, 0.65);
             glVertex3f(1.5, 0.55, -1.45);
             glVertex3f(1.5, 0, -1.45);
             glVertex3f(0.75, 0, 1);
@@ -1193,6 +1207,7 @@ void draw_stardestroyer(){
 
         glBegin(GL_POLYGON);
             glColor3f(0.7, 0.7, 0.7);
+            glNormal3f(-0.3, 0.7, 0);
             glVertex3f(1.5, 0.55, -1.45);
             glVertex3f(0, 1, -1.8);
             glVertex3f(0, 0.55, 1);
@@ -1202,7 +1217,7 @@ void draw_stardestroyer(){
     /*telo broda visi levo*/
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         glBegin(GL_POLYGON);
-            glColor3f(0.7, 0.7, 0.7);
+            glColor3f(0.65, 0.65, 0.65);
             glVertex3f(0, 1, -1.8);
             glVertex3f(-1.5, 0.55, -1.45);
             glVertex3f(-1.5, 0, -1.45);
@@ -1210,7 +1225,8 @@ void draw_stardestroyer(){
         glEnd();
 
         glBegin(GL_POLYGON);
-            glColor3f(0.7, 0.7, 0.7);
+            glColor3f(0.65, 0.65, 0.65);
+            glNormal3f(0, 0, 1);
             glVertex3f(0, 0.55, 1);
             glVertex3f(-0.75, 0.45, 1);
             glVertex3f(-0.75, 0, 1);
@@ -1218,7 +1234,7 @@ void draw_stardestroyer(){
         glEnd();
 
         glBegin(GL_POLYGON);
-            glColor3f(0.7, 0.7, 0.7);
+            glColor3f(0.65, 0.65, 0.65);
             glVertex3f(-1.5, 0.55, -1.45);
             glVertex3f(-1.5, 0, -1.45);
             glVertex3f(-0.75, 0, 1);
@@ -1227,6 +1243,7 @@ void draw_stardestroyer(){
 
         glBegin(GL_POLYGON);
             glColor3f(0.7, 0.7, 0.7);
+            glNormal3f(0.3, 0.7, 0);
             glVertex3f(-1.5, 0.55, -1.45);
             glVertex3f(0, 1, -1.8);
             glVertex3f(0, 0.55, 1);
@@ -1246,7 +1263,8 @@ void draw_stardestroyer(){
 
     /*telo tornja desno*/
     glBegin(GL_POLYGON);
-        glColor3f(0.5, 0.5, 0.5);
+        glColor3f(0.45, 0.45, 0.45);
+        glNormal3f(0, 0, 1);
         glVertex3f(0, 0.2, 0.3);
         glVertex3f(0, -0.2, 0.3);
         glVertex3f(0.8, -0.1, 0.3);
@@ -1254,7 +1272,7 @@ void draw_stardestroyer(){
     glEnd();
 
     glBegin(GL_POLYGON);
-        glColor3f(0.5, 0.5, 0.5); 
+        glColor3f(0.45, 0.45, 0.45);
         glVertex3f(0.8, 0.1, -0.3);
         glVertex3f(0.8, -0.1, -0.3);
         glVertex3f(0, -0.2, -0.3);
@@ -1262,7 +1280,7 @@ void draw_stardestroyer(){
     glEnd();
 
     glBegin(GL_POLYGON);
-        glColor3f(0.5, 0.5, 0.5); 
+        glColor3f(0.65, 0.65, 0.65);
         glVertex3f(0.8, 0.1, -0.3);
         glVertex3f(0, 0.2, -0.3);
         glVertex3f(0, 0.2, 0.3);
@@ -1270,7 +1288,7 @@ void draw_stardestroyer(){
     glEnd();
 
     glBegin(GL_POLYGON);
-        glColor3f(0.5, 0.5, 0.5);
+        glColor3f(0.65, 0.65, 0.65);
         glVertex3f(0.8, -0.1, 0.3);
         glVertex3f(0, -0.2, 0.3);
         glVertex3f(0, -0.2, -0.3);
@@ -1278,18 +1296,27 @@ void draw_stardestroyer(){
     glEnd();
 
     glBegin(GL_POLYGON);
-        glColor3f(0.5, 0.5, 0.5); 
+        glColor3f(0.65, 0.65, 0.65); 
         glVertex3f(0.8, 0.1, 0.3);
         glVertex3f(0.8, -0.1, 0.3);
         glVertex3f(0.8, -0.1, -0.3);
         glVertex3f(0.8, 0.1, 0.3);
+    glEnd();
+
+    glBegin(GL_POLYGON);
+        glColor3f(0.6, 0.6, 0.6); 
+        glVertex3f(0.8, 0.1, 0.3);
+        glVertex3f(0.8, -0.1, 0.3);
+        glVertex3f(0.8, -0.1, -0.3);
+        glVertex3f(0.8, 0.1, -0.3);
     glEnd();
 
     /*telo tornja levo*/
 
     glRotatef(180, 0, 1, 0);
     glBegin(GL_POLYGON);
-        glColor3f(0.5, 0.5, 0.5);
+        glColor3f(0.45, 0.45, 0.45);
+        glNormal3f(0, 0, -1);
         glVertex3f(0, 0.2, 0.3);
         glVertex3f(0, -0.2, 0.3);
         glVertex3f(0.8, -0.1, 0.3);
@@ -1297,7 +1324,7 @@ void draw_stardestroyer(){
     glEnd();
 
     glBegin(GL_POLYGON);
-        glColor3f(0.5, 0.5, 0.5); 
+        glColor3f(0.45, 0.45, 0.45); 
         glVertex3f(0.8, 0.1, -0.3);
         glVertex3f(0.8, -0.1, -0.3);
         glVertex3f(0, -0.2, -0.3);
@@ -1305,7 +1332,7 @@ void draw_stardestroyer(){
     glEnd();
 
     glBegin(GL_POLYGON);
-        glColor3f(0.5, 0.5, 0.5);  
+        glColor3f(0.65, 0.65, 0.65);
         glVertex3f(0.8, 0.1, -0.3);
         glVertex3f(0, 0.2, -0.3);
         glVertex3f(0, 0.2, 0.3);
@@ -1313,7 +1340,7 @@ void draw_stardestroyer(){
     glEnd();
 
     glBegin(GL_POLYGON);
-        glColor3f(0.5, 0.5, 0.5); 
+        glColor3f(0.65, 0.65, 0.65);
         glVertex3f(0.8, -0.1, 0.3);
         glVertex3f(0, -0.2, 0.3);
         glVertex3f(0, -0.2, -0.3);
@@ -1321,12 +1348,21 @@ void draw_stardestroyer(){
     glEnd();
 
     glBegin(GL_POLYGON);
-        glColor3f(0.5, 0.5, 0.5); 
+        glColor3f(0.65, 0.65, 0.65); 
         glVertex3f(0.8, 0.1, 0.3);
         glVertex3f(0.8, -0.1, 0.3);
         glVertex3f(0.8, -0.1, -0.3);
         glVertex3f(0.8, 0.1, 0.3);
     glEnd();
+
+    glBegin(GL_POLYGON);
+        glColor3f(0.6, 0.6, 0.6); 
+        glVertex3f(0.8, 0.1, 0.3);
+        glVertex3f(0.8, -0.1, 0.3);
+        glVertex3f(0.8, -0.1, -0.3);
+        glVertex3f(0.8, 0.1, -0.3);
+    glEnd();
+
     glRotatef(-180, 0, 1, 0);
 
     /*stub tornja*/
