@@ -102,6 +102,8 @@ void on_display(){
 
     draw_track();
 
+    glutTimerFunc(30, update, 0);
+
     draw_xwing(translacija, rotacija);
 
     draw_stardestroyer();
@@ -192,7 +194,7 @@ void left(){
     if(g_current_pos != -1)
         g_desired_pos -= 1;
 
-    glutTimerFunc(30, update, 0);
+    glutPostRedisplay();
 
     /*for(double i = 0; i <= 2.72; i += 2.72/60){
 
@@ -210,7 +212,7 @@ void right(){
     if(g_current_pos != +1)
         g_desired_pos += 1;
 
-    glutTimerFunc(30, update, 0);
+    glutPostRedisplay();
 
     /*for(double i = 0; i <= 2.72; i += 2.72/60){
 
@@ -223,26 +225,34 @@ void right(){
 
 }
 
+int update_count = 0;
+
 void update(int value){
 
     if(g_desired_pos != g_current_pos){
 
-        int coef_prom = 0;
-
-        if(g_desired_pos < g_current_pos){
-            coef_prom = -1;
+        if(update_count >= 60){
+            update_count = 0;
+            g_current_pos = g_desired_pos;
+            return;
         }
-        else
-            coef_prom = 1;
+        else{
 
-        for(double i = 0; i < 30; i++){
+            int coef_prom = 0;
 
-            translacija += coef_prom * 3.25/30;
-            rotacija -= coef_prom * 12;
+            if(g_desired_pos < g_current_pos){
+                coef_prom = -1;
+            }
+            else
+                coef_prom = 1;
+
+            translacija += coef_prom * 3.25/60;
+            rotacija -= coef_prom * 6;
+            update_count++;
 
             glutPostRedisplay();
+                glutTimerFunc(80 + update_count * 5, update, 0);
         }
-        g_current_pos = g_desired_pos;
     }
 
 
