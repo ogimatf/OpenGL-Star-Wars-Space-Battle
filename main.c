@@ -13,6 +13,7 @@ static void on_reshape(int width, int height);
 static void on_keyboard(unsigned char key, int x, int y);
 static void on_special_key_press(int key, int x, int y);
 //static void on_timer();
+void update(int value);
 
 void left();
 void right();
@@ -20,7 +21,10 @@ void right();
 static int window_width, window_height;
 static int h, v = 0;/*za razgledanje*/
 
-int g_game_active = 0;
+int g_game_active = 1;
+int g_current_pos = 0;
+int g_desired_pos = 0;
+
 double rotacija = 0;
 double translacija = 0;
 
@@ -185,26 +189,61 @@ static void on_special_key_press(int key, int x, int y){
 
 void left(){
 
-    for(double i = 0; i <= 2.72; i += 2.72/60){
+    if(g_current_pos != -1)
+        g_desired_pos -= 1;
+
+    glutTimerFunc(30, update, 0);
+
+    /*for(double i = 0; i <= 2.72; i += 2.72/60){
 
         translacija -= i;
         rotacija -= 12;
 
         glutPostRedisplay();
 
-    }
+    }*/
 
 }
 
 void right(){
 
-    for(double i = 0; i <= 2.72; i += 2.72/60){
+    if(g_current_pos != +1)
+        g_desired_pos += 1;
+
+    glutTimerFunc(30, update, 0);
+
+    /*for(double i = 0; i <= 2.72; i += 2.72/60){
 
         translacija += i;
         rotacija += 12;
 
         glutPostRedisplay();
 
+    }*/
+
+}
+
+void update(int value){
+
+    if(g_desired_pos != g_current_pos){
+
+        int coef_prom = 0;
+
+        if(g_desired_pos < g_current_pos){
+            coef_prom = -1;
+        }
+        else
+            coef_prom = 1;
+
+        for(double i = 0; i < 30; i++){
+
+            translacija += coef_prom * 3.25/30;
+            rotacija -= coef_prom * 12;
+
+            glutPostRedisplay();
+        }
+        g_current_pos = g_desired_pos;
     }
+
 
 }
