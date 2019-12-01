@@ -44,7 +44,14 @@ void draw_track(){
 }
 
 
-void draw_xwing(){
+
+
+
+void draw_xwing(double position, double rotation){
+
+	glTranslatef(position, 0, 0);
+	glRotatef(rotation, 0, 0, 1);
+	
 
     glTranslatef(0, 0, 5);
     glScalef(0.5, 0.5, 0.5);
@@ -915,6 +922,11 @@ void draw_xwing(){
 
         glScalef(2, 2, 2);
         glTranslatef(0, 0, -5);
+
+    glRotatef(-rotation, 0, 0, 1);
+	glTranslatef(-position, 0, 0);
+    
+
 }
 
 
@@ -923,6 +935,9 @@ void draw_xwing(){
 
 
 void draw_stardestroyer(){
+
+
+	glPopMatrix();
 
     glTranslatef(-0.1, 0, -15);
 
@@ -1381,5 +1396,7 @@ void draw_stardestroyer(){
     glScalef(0.4, 0.4, 0.4);
 
     glTranslatef(0.1, 0, 15);
+
+    glPushMatrix();
 
 }

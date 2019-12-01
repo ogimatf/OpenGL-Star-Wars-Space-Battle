@@ -14,13 +14,15 @@ static void on_keyboard(unsigned char key, int x, int y);
 static void on_special_key_press(int key, int x, int y);
 //static void on_timer();
 
-/*void left();
-void right();*/
+void left();
+void right();
 
 static int window_width, window_height;
 static int h, v = 0;/*za razgledanje*/
 
 int g_game_active = 0;
+double rotacija = 0;
+double translacija = 0;
 
 
 int main(int argc, char** argv){
@@ -96,7 +98,7 @@ void on_display(){
 
     draw_track();
 
-    draw_xwing();
+    draw_xwing(translacija, rotacija);
 
     draw_stardestroyer();
 
@@ -143,11 +145,31 @@ static void on_keyboard(unsigned char key, int x, int y)
         v-=1;
         glutPostRedisplay();
         break;
+    case 'a':
+
+        if(translacija <= -3.25)
+            break;
+
+        translacija -= 3.25/30;
+        rotacija += 12;
+        glutPostRedisplay();
+        break;
+    case 'd':
+
+        if(translacija >= 3.25)
+            break;
+
+        translacija += 3.25/30;
+        rotacija -= 12;
+        glutPostRedisplay();
+        break;
     }
+
+
 }
 
 static void on_special_key_press(int key, int x, int y){
-/*
+
     switch(key){
         case GLUT_KEY_LEFT:
             if(g_game_active)
@@ -158,5 +180,31 @@ static void on_special_key_press(int key, int x, int y){
                 right();
             break;
     }
-*/
+
+}
+
+void left(){
+
+    for(double i = 0; i <= 2.72; i += 2.72/60){
+
+        translacija -= i;
+        rotacija -= 12;
+
+        glutPostRedisplay();
+
+    }
+
+}
+
+void right(){
+
+    for(double i = 0; i <= 2.72; i += 2.72/60){
+
+        translacija += i;
+        rotacija += 12;
+
+        glutPostRedisplay();
+
+    }
+
 }
