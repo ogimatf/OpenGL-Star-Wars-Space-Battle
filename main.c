@@ -3,7 +3,7 @@
 #include <string.h>
 
 #include "draw.h"
-//#include "function.h"
+#include "function.h"
 
 #include <GL/gl.h>
 #include <GL/glu.h>
@@ -14,7 +14,8 @@ static void on_reshape(int width, int height);
 static void on_keyboard(unsigned char key, int x, int y);
 static void on_special_key_press(int key, int x, int y);
 
-void update(int value);
+void update_xwing(int value);
+void update_enemy_laser(int value);
 
 void left();
 void right();
@@ -27,6 +28,11 @@ int g_game_active = 1;
 /*pracenje tekuce i zeljene pozicije xwing-a u odnosu na staze*/
 int g_current_pos = 0;
 int g_desired_pos = 0;
+
+/*pozicija neprijateljskog lasera*/
+double g_el_position = -15;
+int g_el_in_flight = 0;
+int g_el_lane = 0;
 
 /*pracenje pozicije u kojoj crta xwing*/
 double rotacija = 0;
@@ -104,11 +110,19 @@ void on_display(){
 
     draw_track();
 
-    glutTimerFunc(30, update, 0);
+    glutTimerFunc(30, update_xwing, 0);
+    glutTimerFunc(100, update_enemy_laser, 1);
 
     draw_xwing(translacija, rotacija);
 
     draw_stardestroyer();
+
+    if(!g_el_in_flight){
+        g_el_in_flight = 1;
+        g_el_lane = g_current_pos;
+    }
+
+    draw_enemy_laser(g_el_lane, g_el_position);
 
     glRotatef(-0+10*h, 0, 1, 0);
     glRotatef(-0+10*v, 0, 0, 1);
@@ -213,15 +227,16 @@ void right(){
 
 }
 
-int update_count = 0;
+/*brojac azuriranja xwinga*/
+int update_xwing_count = 0;
 
 /*fukncija za osvezavanje pozicije (tralacije i rotacije) x-winga*/
-void update(int value){
+void update_xwing(int value){
 
     if(g_desired_pos != g_current_pos){
 
-        if(update_count >= 60){
-            update_count = 0;
+        if(update_xwing_count >= 60){
+            update_xwing_count = 0;
             g_current_pos = g_desired_pos;
             return;
         }
@@ -237,11 +252,34 @@ void update(int value){
 
             translacija += coef_prom * 3.25/60;
             rotacija -= coef_prom * 6;
-            update_count++;
+            update_xwing_count++;
 
             glutPostRedisplay();
-                glutTimerFunc(80 + update_count * 5, update, 0);
+            glutTimerFunc(80 + update_xwing_count * 5, update_xwing, 0);
         }
     }
 
+}
+
+
+/*funkcija azuriranja neprijateljskog lasera*/
+int update_el_count = 0;
+
+void update_enemy_laser(int value){
+
+    if(update_el_count >= 60){
+        update_el_count = 0;
+        g_el_position = -15;
+        g_el_in_flight = 0;
+        return;
+    }
+    else{
+
+        g_el_position += 20.0/60;
+        update_el_count++;
+
+        glutPostRedisplay();
+        glutTimerFunc(2000 + update_el_count * 2000 * 2, update_enemy_laser, 1);
+
+    }
 }

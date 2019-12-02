@@ -8,7 +8,7 @@
 #include <GL/glut.h>
 
 
-/*funcija koja crta staze*/
+/*funckija koja crta staze*/
 void draw_track(){
 
     glColor3f(1, 1, 1);
