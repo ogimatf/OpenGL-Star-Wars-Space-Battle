@@ -23,9 +23,12 @@ static int window_width, window_height;
 static int h, v = 0;/*za razgledanje*/
 
 int g_game_active = 1;
+
+/*pracenje tekuce i zeljene pozicije xwing-a u odnosu na staze*/
 int g_current_pos = 0;
 int g_desired_pos = 0;
 
+/*pracenje pozicije u kojoj crta xwing*/
 double rotacija = 0;
 double translacija = 0;
 
