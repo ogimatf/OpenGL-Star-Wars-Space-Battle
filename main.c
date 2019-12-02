@@ -28,11 +28,16 @@ int g_game_active = 1;
 /*pracenje tekuce i zeljene pozicije xwing-a u odnosu na staze*/
 int g_current_pos = 0;
 int g_desired_pos = 0;
+int g_current_hitbox = 0;
+/*brojac azuriranja xwinga*/
+int update_xwing_count = 0;
 
 /*pozicija neprijateljskog lasera*/
 double g_el_position = -15;
 int g_el_in_flight = 0;
 int g_el_lane = 0;
+/*funkcija azuriranja neprijateljskog lasera*/
+int update_el_count = 0;
 
 /*pracenje pozicije u kojoj crta xwing*/
 double rotacija = 0;
@@ -108,10 +113,14 @@ void on_display(){
 	glRotatef(0+10*h, 0, 1, 0);
     glRotatef(0+10*v, 0, 0, 1);
 
+    
+
     draw_track();
 
-    glutTimerFunc(30, update_xwing, 0);
-    glutTimerFunc(100, update_enemy_laser, 1);
+    if(g_game_active){
+        glutTimerFunc(30, update_xwing, 0);
+        glutTimerFunc(100, update_enemy_laser, 1);
+    }
 
     draw_xwing(translacija, rotacija);
 
@@ -123,6 +132,7 @@ void on_display(){
     }
 
     draw_enemy_laser(g_el_lane, g_el_position);
+    
 
     glRotatef(-0+10*h, 0, 1, 0);
     glRotatef(-0+10*v, 0, 0, 1);
@@ -169,7 +179,6 @@ static void on_keyboard(unsigned char key, int x, int y)
         glutPostRedisplay();
         break;
     case 'a':
-
         if(translacija <= -3.25)
             break;
 
@@ -186,8 +195,40 @@ static void on_keyboard(unsigned char key, int x, int y)
         rotacija -= 12;
         glutPostRedisplay();
         break;
-    }
+    case 'p':
+        if(g_game_active){
+            g_game_active = 0;
+            glutPostRedisplay();
+        }
+        else{
+            g_game_active = 1;
+            glutPostRedisplay();
+        }
+        break;
+    case 'r':
+        /*reset*/
 
+        g_game_active = 1;
+        /*pracenje tekuce i zeljene pozicije xwing-a u odnosu na staze*/
+        g_current_pos = 0;
+        g_desired_pos = 0;
+        g_current_hitbox = 0;
+
+        /*pozicija neprijateljskog lasera*/
+        g_el_position = -15;
+        g_el_in_flight = 0;
+        g_el_lane = 0;
+
+        /*pracenje pozicije u kojoj crta xwing*/
+        rotacija = 0;
+        translacija = 0;
+
+        update_xwing_count = 0;
+        update_el_count = 0;
+
+        glutPostRedisplay();
+        break;
+    }
 
 }
 
@@ -227,14 +268,17 @@ void right(){
 
 }
 
-/*brojac azuriranja xwinga*/
-int update_xwing_count = 0;
-
-/*fukncija za osvezavanje pozicije (tralacije i rotacije) x-winga*/
+/*funkcija za osvezavanje pozicije (translacije i rotacije) x-winga*/
 void update_xwing(int value){
 
     if(g_desired_pos != g_current_pos){
 
+        /*azuriranje hitboxa*/
+        if(update_xwing_count > 30){
+            g_current_hitbox = g_desired_pos;
+        }
+
+        /*provera stizanja u novu stazu*/
         if(update_xwing_count >= 60){
             update_xwing_count = 0;
             g_current_pos = g_desired_pos;
@@ -242,6 +286,8 @@ void update_xwing(int value){
         }
         else{
 
+            /*postepeno menjanje staze*/
+            
             int coef_prom = 0;
 
             if(g_desired_pos < g_current_pos){
@@ -255,18 +301,18 @@ void update_xwing(int value){
             update_xwing_count++;
 
             glutPostRedisplay();
-            glutTimerFunc(80 + update_xwing_count * 5, update_xwing, 0);
+
+            if(g_game_active)
+                glutTimerFunc(80 + update_xwing_count * 5, update_xwing, 0);
         }
     }
 
 }
 
-
-/*funkcija azuriranja neprijateljskog lasera*/
-int update_el_count = 0;
-
+/*funkcija za osvezavanje pozicije neprijateljskog lasera*/
 void update_enemy_laser(int value){
 
+    /*resetovanje pozicije lasera posle promasaja*/
     if(update_el_count >= 60){
         update_el_count = 0;
         g_el_position = -15;
@@ -275,11 +321,20 @@ void update_enemy_laser(int value){
     }
     else{
 
+        /*provera kolizije*/
+        if(g_el_position >= 3 && g_el_lane == g_current_hitbox){
+            g_game_active = 0;
+            glutPostRedisplay();
+            return;
+        }
+
         g_el_position += 20.0/60;
-        update_el_count++;
+        update_el_count++;     
 
         glutPostRedisplay();
-        glutTimerFunc(2000 + update_el_count * 2000 * 2, update_enemy_laser, 1);
+        
+        if(g_game_active)
+            glutTimerFunc(2000 + update_el_count * 2000 * 2, update_enemy_laser, 1);
 
     }
 }
