@@ -10,6 +10,7 @@
 /*funkcija crtanja neprijateljskog lasera*/
 void draw_enemy_laser(int lane, double position){
 
+	/*crtanje lasera u zavisnosti od staze i pozicije*/
 	double tx = -0.3;
 	double ty = -0.2;
 	double tz = position;
