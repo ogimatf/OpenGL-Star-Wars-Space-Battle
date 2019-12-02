@@ -30,3 +30,24 @@ void draw_enemy_laser(int lane, double position){
 
     glTranslatef(-tx, -ty, -tz);
 }
+
+/*funkcija koja crta exploziju*/
+void draw_l_fireball(int lane, double size){
+
+	double tx = -0.32;
+	double ty = -0.2;
+	double tz = 4.5;
+
+	if(lane == -1)
+		tx -= 3.25;
+	else if(lane == 1)
+		tx += 3.25;
+
+	glTranslatef(tx, ty, tz);
+
+	glColor3f(255.0/255,120.0/255,0);
+	glutSolidSphere(size, 50, 50);
+
+	glTranslatef(-tx, -ty, -tz);
+
+}

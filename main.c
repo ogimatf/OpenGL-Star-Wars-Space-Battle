@@ -16,6 +16,7 @@ static void on_special_key_press(int key, int x, int y);
 
 void update_xwing(int value);
 void update_enemy_laser(int value);
+void update_fireball(int value);
 
 void left();
 void right();
@@ -24,6 +25,7 @@ static int window_width, window_height;
 static int h, v = 0;/*za razgledanje*/
 
 int g_game_active = 1;
+int g_poraz = 0;
 
 /*pracenje tekuce i zeljene pozicije xwing-a u odnosu na staze*/
 int g_current_pos = 0;
@@ -42,6 +44,10 @@ int update_el_count = 0;
 /*pracenje pozicije u kojoj crta xwing*/
 double rotacija = 0;
 double translacija = 0;
+
+/*pracenje eksplozije*/
+double fireball_size = 0;
+int update_fireball_count = 0;
 
 
 int main(int argc, char** argv){
@@ -132,6 +138,11 @@ void on_display(){
     }
 
     draw_enemy_laser(g_el_lane, g_el_position);
+
+    if(g_poraz){
+        draw_l_fireball(g_current_hitbox, fireball_size);
+        glutTimerFunc(30 + update_fireball_count * 10, update_fireball, 2);
+    }
     
 
     glRotatef(-0+10*h, 0, 1, 0);
@@ -209,6 +220,7 @@ static void on_keyboard(unsigned char key, int x, int y)
         /*reset*/
 
         g_game_active = 1;
+        g_poraz = 0;
         /*pracenje tekuce i zeljene pozicije xwing-a u odnosu na staze*/
         g_current_pos = 0;
         g_desired_pos = 0;
@@ -223,8 +235,12 @@ static void on_keyboard(unsigned char key, int x, int y)
         rotacija = 0;
         translacija = 0;
 
+        /*azuriranja*/
         update_xwing_count = 0;
         update_el_count = 0;
+
+        fireball_size = 0;
+        update_fireball_count = 0;
 
         glutPostRedisplay();
         break;
@@ -324,6 +340,7 @@ void update_enemy_laser(int value){
         /*provera kolizije*/
         if(g_el_position >= 3 && g_el_lane == g_current_hitbox){
             g_game_active = 0;
+            g_poraz = 1;
             glutPostRedisplay();
             return;
         }
@@ -337,4 +354,18 @@ void update_enemy_laser(int value){
             glutTimerFunc(2000 + update_el_count * 2000 * 2, update_enemy_laser, 1);
 
     }
+}
+
+void update_fireball(int value){
+
+    if(update_fireball_count >= 60){
+        return;
+    }
+
+    fireball_size += 2.0/60;
+    update_fireball_count++;
+
+    glutPostRedisplay();
+    glutTimerFunc(60 + update_fireball_count * 10, update_fireball, 2);
+
 }
