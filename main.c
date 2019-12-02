@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "draw.h"
+//#include "function.h"
 
 #include <GL/gl.h>
 #include <GL/glu.h>
@@ -12,7 +13,7 @@ static void on_display(void);
 static void on_reshape(int width, int height);
 static void on_keyboard(unsigned char key, int x, int y);
 static void on_special_key_press(int key, int x, int y);
-//static void on_timer();
+
 void update(int value);
 
 void left();
@@ -48,8 +49,6 @@ int main(int argc, char** argv){
 	glutKeyboardFunc(on_keyboard);
     glutSpecialFunc(on_special_key_press);
     glutSetCursor(GLUT_CURSOR_NONE);
-
-    //glutTimerFunc(10, on_timer(), 0);
 
 	/*prostor za timer funkciju*/
 
@@ -128,6 +127,7 @@ static void on_reshape(int width, int height){
 	window_height = height;
 }
 
+/*programiranje dugmica radi debagovanja i razgledanja*/
 static void on_keyboard(unsigned char key, int x, int y)
 {
     switch (key) {
@@ -189,6 +189,7 @@ static void on_special_key_press(int key, int x, int y){
 
 }
 
+/*skretanje u traku levo*/
 void left(){
 
     if(g_current_pos != -1)
@@ -196,17 +197,10 @@ void left(){
 
     glutPostRedisplay();
 
-    /*for(double i = 0; i <= 2.72; i += 2.72/60){
-
-        translacija -= i;
-        rotacija -= 12;
-
-        glutPostRedisplay();
-
-    }*/
-
 }
 
+
+/*skretanje u traku desno*/
 void right(){
 
     if(g_current_pos != +1)
@@ -214,19 +208,11 @@ void right(){
 
     glutPostRedisplay();
 
-    /*for(double i = 0; i <= 2.72; i += 2.72/60){
-
-        translacija += i;
-        rotacija += 12;
-
-        glutPostRedisplay();
-
-    }*/
-
 }
 
 int update_count = 0;
 
+/*fukncija za osvezavanje pozicije (tralacije i rotacije) x-winga*/
 void update(int value){
 
     if(g_desired_pos != g_current_pos){
@@ -254,6 +240,5 @@ void update(int value){
                 glutTimerFunc(80 + update_count * 5, update, 0);
         }
     }
-
 
 }

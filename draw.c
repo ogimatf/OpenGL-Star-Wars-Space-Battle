@@ -7,6 +7,8 @@
 #include <GL/glu.h>
 #include <GL/glut.h>
 
+
+/*funcija koja crta staze*/
 void draw_track(){
 
     glColor3f(1, 1, 1);
@@ -45,8 +47,7 @@ void draw_track(){
 
 
 
-
-
+/*funckija koja crta i pozicionira x-wing*/
 void draw_xwing(double position, double rotation){
 
 	glTranslatef(position, 0, 0);
@@ -933,7 +934,7 @@ void draw_xwing(double position, double rotation){
 
 
 
-
+/*funckija koja crta i pozicionira star-destroyer*/
 void draw_stardestroyer(){
 
 
