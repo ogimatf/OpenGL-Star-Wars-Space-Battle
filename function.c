@@ -11,7 +11,7 @@
 void draw_enemy_laser(int lane, double position){
 
 	/*crtanje lasera u zavisnosti od staze i pozicije*/
-	double tx = -0.3;
+	double tx = -0.32;
 	double ty = -0.2;
 	double tz = position;
 
@@ -23,10 +23,10 @@ void draw_enemy_laser(int lane, double position){
 	glTranslatef(tx, ty, tz);
 
 	GLUquadric* gluqEnLaser = gluNewQuadric();
-			glColor3f(0.2, 0.8, 0.5);
+			glColor3f(32.0/255,178.0/255,170.0/255);
             gluQuadricTexture(gluqEnLaser, GLU_TRUE);
             gluQuadricDrawStyle(gluqEnLaser, GLU_FILL);
-            gluCylinder(gluqEnLaser, 0.125, 0.125, 1, 20, 10);
+            gluCylinder(gluqEnLaser, 0.175, 0.175, 2, 20, 10);
 
     glTranslatef(-tx, -ty, -tz);
 }
