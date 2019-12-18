@@ -31,6 +31,30 @@ void draw_enemy_laser(int lane, double position){
     glTranslatef(-tx, -ty, -tz);
 }
 
+/*funkcija crtanja prijateljskog lasera*/
+void draw_ally_laser(int lane, double position){
+
+	/*crtanje lasera u zavisnosti od staze i pozicije*/
+	double tx = -0.32;
+	double ty = -0.2;
+	double tz = position;
+
+	if(lane == -1)
+		tx -= 3.25;
+	else if(lane == 1)
+		tx += 3.25;
+
+	glTranslatef(tx, ty, tz);
+
+	GLUquadric* gluqAlLaser = gluNewQuadric();
+			glColor3f(200.0/255,0/255,139.0/255);
+            gluQuadricTexture(gluqAlLaser, GLU_TRUE);
+            gluQuadricDrawStyle(gluqAlLaser, GLU_FILL);
+            gluCylinder(gluqAlLaser, 0.05, 0.05, 0.75, 20, 10);
+
+    glTranslatef(-tx, -ty, -tz);
+}
+
 /*funkcija koja crta exploziju*/
 void draw_l_fireball(int lane, double size){
 
