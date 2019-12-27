@@ -47,7 +47,7 @@ int g_el_lane = 0;
 int update_el_count = 0;
 
 /*pozicija prijateljskog lasera*/
-double g_al_position = 6;
+double g_al_position = 5;
 int g_al_in_flight = 0;
 int g_al_lane = 0;
 /*funkcija azuriranja prijateljskog lasera*/
@@ -89,8 +89,6 @@ int main(int argc, char** argv){
 	GLfloat light_ambient[] = {0.3, 0.3, 0.3, 0.7};
 	GLfloat light_diffuse[] = {0.5, 0.5, 0.5, 0.7};
 	GLfloat light_specular[] = {1, 1, 1, 1};
-
-	//GLfloat model_ambient[] = {1, 1, 1, 0};
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
@@ -137,13 +135,14 @@ void on_display(){
     draw_track();
 
     if(g_game_active){
-        glutTimerFunc(30, update_xwing, 0);
+        glutTimerFunc(5, update_xwing, 0);
         glutTimerFunc(100, update_enemy_laser, 1);
     }
 
     draw_xwing(translacija, rotacija);
 
     draw_stardestroyer();
+    draw_health_bar(g_star_destroyer_hp);
 
     if(g_al_shoot){
 
@@ -152,7 +151,7 @@ void on_display(){
             g_al_lane = g_current_pos;
 
         draw_ally_laser(g_al_lane, g_al_position);
-        glutTimerFunc(60 + update_al_count * 10, update_ally_laser, 3);
+        glutTimerFunc(60, update_ally_laser, 3);
 
     }
 
@@ -165,7 +164,12 @@ void on_display(){
 
     if(g_poraz){
         draw_l_fireball(g_current_hitbox, fireball_size);
-        glutTimerFunc(30 + update_fireball_count * 10, update_fireball, 2);
+        glutTimerFunc(5, update_fireball, 2);
+    }
+
+    if(g_pobeda){
+    	draw_w_fireball(fireball_size);
+    	glutTimerFunc(5, update_fireball, 2);
     }
     
 
@@ -354,9 +358,6 @@ void update_xwing(int value){
             update_xwing_count++;
 
             glutPostRedisplay();
-
-            if(g_game_active)
-                glutTimerFunc(80 + update_xwing_count * 5, update_xwing, 0);
         }
     }
 
@@ -364,6 +365,9 @@ void update_xwing(int value){
 
 /*funkcija za osvezavanje pozicije neprijateljskog lasera*/
 void update_enemy_laser(int value){
+
+	if(value != 1)
+		return;
 
     if(!g_game_active)
         return;
@@ -389,9 +393,6 @@ void update_enemy_laser(int value){
         update_el_count++;     
 
         glutPostRedisplay();
-        
-        if(g_game_active)
-            glutTimerFunc(2000 + update_el_count * 2000 * 2, update_enemy_laser, 1);
 
     }
 }
@@ -399,16 +400,17 @@ void update_enemy_laser(int value){
 /*funkcija za osvezavanje pozicije neprijateljskog lasera*/
 void update_ally_laser(int value){
 
+	if(value != 3)
+		return;
+
     if(!g_game_active)
         return;
 
     /*resetovanje pozicije lasera posle promasaja*/
     if(update_al_count >= 60){
 
-        /*printf("%lf\n", g_al_position);*/
-
         update_al_count = 0;
-        g_al_position = 6;
+        g_al_position = 5;
         g_al_in_flight = 0;
         g_al_shoot = 0;
 
@@ -420,7 +422,7 @@ void update_ally_laser(int value){
         /*provera kolizije*/
         if(g_al_position <= -13.5){
 
-            g_star_destroyer_hp--;
+            g_star_destroyer_hp-=5;
 
             if(g_star_destroyer_hp <= 0){
                 g_game_active = 0;
@@ -434,9 +436,6 @@ void update_ally_laser(int value){
         update_al_count++;     
 
         glutPostRedisplay();
-        
-        if(g_game_active)
-            glutTimerFunc(60 + update_al_count * 10, update_ally_laser, 3);
 
     }
 }
@@ -447,6 +446,9 @@ void update_ally_laser(int value){
 /*funkcija za osvezavanje eksplozije*/
 void update_fireball(int value){
 
+	if(value != 2)
+		return;
+
     if(update_fireball_count >= 60){
         return;
     }
@@ -455,6 +457,5 @@ void update_fireball(int value){
     update_fireball_count++;
 
     glutPostRedisplay();
-    glutTimerFunc(60 + update_fireball_count * 10, update_fireball, 2);
 
 }

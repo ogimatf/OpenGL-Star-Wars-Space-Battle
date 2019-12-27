@@ -50,6 +50,8 @@ void draw_track(){
 /*funckija koja crta i pozicionira x-wing*/
 void draw_xwing(double position, double rotation){
 
+    glPushMatrix();
+
 	glTranslatef(position, 0, 0);
 	glRotatef(rotation, 0, 0, 1);
 	
@@ -926,6 +928,8 @@ void draw_xwing(double position, double rotation){
 
     glRotatef(-rotation, 0, 0, 1);
 	glTranslatef(-position, 0, 0);
+
+    glPopMatrix();
     
 
 }
