@@ -70,12 +70,12 @@ int main(int argc, char** argv){
 
 	glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
 
-	glutInitWindowSize(800, 600);
+	glutInitWindowSize(1800, 1000);
 	glutInitWindowPosition(100, 100);
 
 	glutCreateWindow(argv[0]);
 
-	glutFullScreen();
+	/*glutFullScreen();*/
 
 	glutDisplayFunc(on_display);
 	glutReshapeFunc(on_reshape);
