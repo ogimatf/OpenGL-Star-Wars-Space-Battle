@@ -4,6 +4,7 @@
 
 #include "draw.h"
 #include "function.h"
+#include "image.h"
 
 #include <GL/gl.h>
 #include <GL/glu.h>
@@ -193,7 +194,7 @@ static void on_reshape(int width, int height){
 	window_height = height;
 }
 
-/*programiranje dugmica radi debagovanja i razgledanja*/
+/*programiranje dugmica*/
 static void on_keyboard(unsigned char key, int x, int y)
 {
     switch (key) {
@@ -289,6 +290,7 @@ static void on_keyboard(unsigned char key, int x, int y)
 
 }
 
+
 static void on_special_key_press(int key, int x, int y){
 
     switch(key){
@@ -301,8 +303,8 @@ static void on_special_key_press(int key, int x, int y){
                 right();
             break;
     }
-
 }
+
 
 /*skretanje u traku levo*/
 void left(){
@@ -324,6 +326,7 @@ void right(){
     glutPostRedisplay();
 
 }
+
 
 /*funkcija za osvezavanje pozicije (translacije i rotacije) x-winga*/
 void update_xwing(int value){
@@ -363,6 +366,7 @@ void update_xwing(int value){
 
 }
 
+
 /*funkcija za osvezavanje pozicije neprijateljskog lasera*/
 void update_enemy_laser(int value){
 
@@ -396,6 +400,7 @@ void update_enemy_laser(int value){
 
     }
 }
+
 
 /*funkcija za osvezavanje pozicije neprijateljskog lasera*/
 void update_ally_laser(int value){
@@ -439,8 +444,6 @@ void update_ally_laser(int value){
 
     }
 }
-
-
 
 
 /*funkcija za osvezavanje eksplozije*/
