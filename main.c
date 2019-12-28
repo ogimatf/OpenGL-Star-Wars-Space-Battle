@@ -15,6 +15,8 @@ static void on_reshape(int width, int height);
 static void on_keyboard(unsigned char key, int x, int y);
 static void on_special_key_press(int key, int x, int y);
 
+void draw_background();
+
 void update_xwing(int value);
 void update_enemy_laser(int value);
 void update_ally_laser(int value);
@@ -22,6 +24,12 @@ void update_fireball(int value);
 
 void left();
 void right();
+
+/*imena fajla sa teksturama*/
+#define FILENAME0 "./space.bmp"
+
+/*identifikatori tekstura*/
+static GLuint names[1];
 
 static int window_width, window_height;
 static int h, v = 0;/*za razgledanje*/
@@ -84,8 +92,6 @@ int main(int argc, char** argv){
     glutSpecialFunc(on_special_key_press);
     glutSetCursor(GLUT_CURSOR_NONE);
 
-	/*prostor za timer funkciju*/
-
 	/*osvetljenje*/
 	GLfloat light_ambient[] = {0.3, 0.3, 0.3, 0.7};
 	GLfloat light_diffuse[] = {0.5, 0.5, 0.5, 0.7};
@@ -110,6 +116,35 @@ int main(int argc, char** argv){
     glEnable(GL_DEPTH_TEST);
     glLineWidth(2);
 
+    /*teksture*/
+
+    Image* image;
+
+    glEnable(GL_TEXTURE_2D);
+
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+
+    image = image_init(0, 0);
+
+    /*Kreira se tekstura*/
+    image_read(image, FILENAME0);
+
+    glGenTextures(1, names);
+
+    glBindTexture(GL_TEXTURE_2D, names[0]);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->width, image->height, 0, GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
+
+    /*iskljucujemo aktivnu teksturu*/
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    /*brise objekat za citanje tekstura iz fajla*/
+    image_done(image);
+
     glutMainLoop();
 
     return 0;
@@ -131,7 +166,7 @@ void on_display(){
 	glRotatef(0+10*h, 0, 1, 0);
     glRotatef(0+10*v, 0, 0, 1);
 
-    
+    draw_background();
 
     draw_track();
 
@@ -200,6 +235,8 @@ static void on_keyboard(unsigned char key, int x, int y)
     switch (key) {
     case 27:
     	/*na esc se prekida program*/
+    	/*oslobadjanje resursa za teksture*/
+    	glDeleteTextures(2, names);
         exit(0);
         break;
     case 'h':
@@ -460,5 +497,32 @@ void update_fireball(int value){
     update_fireball_count++;
 
     glutPostRedisplay();
+
+}
+
+
+/*fukncija koja iscrtava pozadinu*/
+void draw_background(){
+
+	glEnable(GL_TEXTURE_2D);
+
+	glBindTexture(GL_TEXTURE_2D, names[0]);
+	glBegin(GL_QUADS);
+		glNormal3f(0, 0, 1);
+
+		glTexCoord2f(0, 0);
+		glVertex3f(-60, 50, -20);
+
+		glTexCoord2f(1, 0);
+		glVertex3f(60, 50, -20);
+
+		glTexCoord2f(1, 1);
+		glVertex3f(60, -50, -20);
+
+		glTexCoord2f(0, 1);
+		glVertex3f(-60, -50, -20);
+	glEnd();
+
+	glBindTexture(GL_TEXTURE_2D, 0);
 
 }
