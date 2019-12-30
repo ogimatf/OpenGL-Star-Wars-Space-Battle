@@ -515,7 +515,7 @@ void draw_background(){
 
     glPushMatrix();
 
-    glTranslatef(0, -25, -40);
+    glTranslatef(0, -20, -35);
 
     glRotatef(-30, 1, 0, 0);
 
