@@ -26,7 +26,7 @@ void left();
 void right();
 
 /*imena fajla sa teksturama*/
-#define FILENAME0 "./space.bmp"
+#define FILENAME0 "space.bmp"
 
 /*identifikatori tekstura*/
 static GLuint names[1];
@@ -35,7 +35,7 @@ static int window_width, window_height;
 static int h, v = 0;/*za razgledanje*/
 
 /*pracenje statusa igre*/
-int g_game_active = 1;
+int g_game_active = 0;
 int g_poraz = 0;
 int g_pobeda = 0;
 
@@ -119,6 +119,8 @@ int main(int argc, char** argv){
     /*teksture*/
 
     Image* image;
+
+    glClearColor(0, 0, 0, 0);
 
     glEnable(GL_TEXTURE_2D);
 
@@ -282,6 +284,11 @@ static void on_keyboard(unsigned char key, int x, int y)
             glutPostRedisplay();
         }
         break;
+    case 'g':
+        if(!g_game_active){
+            g_game_active = 1;
+            glutPostRedisplay();
+        }
     case 'r':
         /*reset*/
 
@@ -501,27 +508,36 @@ void update_fireball(int value){
 }
 
 
-/*fukncija koja iscrtava pozadinu*/
+/*funkcija koja iscrtava pozadinu*/
 void draw_background(){
 
 	glEnable(GL_TEXTURE_2D);
+
+    glPushMatrix();
+
+    glTranslatef(0, -25, -40);
+
+    glRotatef(-30, 1, 0, 0);
 
 	glBindTexture(GL_TEXTURE_2D, names[0]);
 	glBegin(GL_QUADS);
 		glNormal3f(0, 0, 1);
 
+        /*120x67 zbog 1920x1080*/
 		glTexCoord2f(0, 0);
-		glVertex3f(-60, 50, -20);
-
-		glTexCoord2f(1, 0);
-		glVertex3f(60, 50, -20);
-
-		glTexCoord2f(1, 1);
-		glVertex3f(60, -50, -20);
+		glVertex3f(-60, 34, 0);
 
 		glTexCoord2f(0, 1);
-		glVertex3f(-60, -50, -20);
+		glVertex3f(60, 34, 0);
+
+		glTexCoord2f(1, 1);
+		glVertex3f(60, -34, 0);
+
+		glTexCoord2f(1, 0);
+		glVertex3f(-60, -34, 0);
 	glEnd();
+
+    glPopMatrix();
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 
