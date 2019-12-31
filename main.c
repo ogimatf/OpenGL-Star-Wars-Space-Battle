@@ -21,7 +21,10 @@ void initialize_textures(void);
 /*crta pozadinu*/
 void draw_background(void);
 
+/*iscrtavanje stanja igrice*/
 void draw_start(void);
+void draw_win(void);
+void draw_loss(void);
 
 /*azuriranje polozaja objekata*/
 void update_xwing(int value);
@@ -36,6 +39,8 @@ void right(void);
 /*imena fajla sa teksturama*/
 #define FILENAME0 "space.bmp"
 #define FILENAME1 "start.bmp"
+#define FILENAME2 "won.bmp"
+#define FILENAME3 "lost.bmp"
 
 /*identifikatori tekstura*/
 static GLuint names[4];
@@ -48,6 +53,8 @@ int g_game_active = 0;
 int g_poraz = 0;
 int g_pobeda = 0;
 int g_draw_start = 1;
+int g_draw_won = 0;
+int g_draw_loss = 0;
 
 int g_star_destroyer_hp = 100;
 
@@ -156,6 +163,14 @@ void on_display(){
     if(g_draw_start){
         gluLookAt(0, 0, 15, 0, 0, 0, 0, 1, 0);
         draw_start();
+    }
+    else if(g_draw_won){
+        gluLookAt(0, 0, 15, 0, 0, 0, 0, 1, 0);
+        draw_win();
+    }
+    else if(g_draw_loss){
+        gluLookAt(0, 0, 15, 0, 0, 0, 0, 1, 0);
+        draw_loss();
     }
     else{
         gluLookAt(0, 6, 10, 0, 0, 0, 0, 1, 0);
@@ -495,6 +510,13 @@ void update_fireball(int value){
         return;
 
     if(update_fireball_count >= 60){
+        if(g_pobeda){
+            g_draw_won = 1;
+        }
+        if(g_poraz){
+            g_draw_loss = 1;
+        }
+        glutPostRedisplay();
         return;
     }
 
@@ -535,6 +557,26 @@ void initialize_textures(void){
     image_read(image, FILENAME1);
 
     glBindTexture(GL_TEXTURE_2D, names[1]);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->width, image->height, 0, GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
+
+    image_read(image, FILENAME2);
+
+    glBindTexture(GL_TEXTURE_2D, names[2]);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->width, image->height, 0, GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
+
+    image_read(image, FILENAME3);
+
+    glBindTexture(GL_TEXTURE_2D, names[3]);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
@@ -583,9 +625,10 @@ void draw_background(void){
     glPopMatrix();
 
     glBindTexture(GL_TEXTURE_2D, 0);
-
 }
 
+
+/*iscrtava pocetni ekran*/
 void draw_start(void){
 
     glEnable(GL_TEXTURE_2D);
@@ -599,6 +642,74 @@ void draw_start(void){
     glRotatef(90, 0, 0, 1);
 
     glBindTexture(GL_TEXTURE_2D, names[1]);
+    glBegin(GL_QUADS);
+        glNormal3f(0, 0, 1);
+
+        /*120x67 zbog 1920x1080*/
+        glTexCoord2f(0, 0);
+        glVertex3f(-30, 17, 0);
+
+        glTexCoord2f(0, 1);
+        glVertex3f(30, 17, 0);
+
+        glTexCoord2f(1, 1);
+        glVertex3f(30, -17, 0);
+
+        glTexCoord2f(1, 0);
+        glVertex3f(-30, -17, 0);
+    glEnd();
+
+    glPopMatrix();
+
+    glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+/*iscrtava ekran pobede*/
+void draw_win(void){
+
+    glEnable(GL_TEXTURE_2D);
+
+    glPushMatrix();
+
+    glScalef(1, 0.3, 1);
+
+    glRotatef(90, 0, 0, 1);
+
+    glBindTexture(GL_TEXTURE_2D, names[2]);
+    glBegin(GL_QUADS);
+        glNormal3f(0, 0, 1);
+
+        /*120x67 zbog 1920x1080*/
+        glTexCoord2f(0, 0);
+        glVertex3f(-30, 17, 0);
+
+        glTexCoord2f(0, 1);
+        glVertex3f(30, 17, 0);
+
+        glTexCoord2f(1, 1);
+        glVertex3f(30, -17, 0);
+
+        glTexCoord2f(1, 0);
+        glVertex3f(-30, -17, 0);
+    glEnd();
+
+    glPopMatrix();
+
+    glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+/*iscrtava ekran poraza*/
+void draw_loss(void){
+
+    glEnable(GL_TEXTURE_2D);
+
+    glPushMatrix();
+
+    glScalef(1, 0.3, 1);
+
+    glRotatef(90, 0, 0, 1);
+
+    glBindTexture(GL_TEXTURE_2D, names[3]);
     glBegin(GL_QUADS);
         glNormal3f(0, 0, 1);
 
