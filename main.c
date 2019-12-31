@@ -16,10 +16,12 @@ static void on_keyboard(unsigned char key, int x, int y);
 static void on_special_key_press(int key, int x, int y);
 
 /*inicijalizuje teksture*/
-void initialize_texures(void);
+void initialize_textures(void);
 
 /*crta pozadinu*/
 void draw_background(void);
+
+void draw_start(void);
 
 /*azuriranje polozaja objekata*/
 void update_xwing(int value);
@@ -33,9 +35,10 @@ void right(void);
 
 /*imena fajla sa teksturama*/
 #define FILENAME0 "space.bmp"
+#define FILENAME1 "start.bmp"
 
 /*identifikatori tekstura*/
-static GLuint names[1];
+static GLuint names[4];
 
 static int window_width, window_height;
 static int h, v = 0;/*za razgledanje*/
@@ -44,6 +47,7 @@ static int h, v = 0;/*za razgledanje*/
 int g_game_active = 0;
 int g_poraz = 0;
 int g_pobeda = 0;
+int g_draw_start = 1;
 
 int g_star_destroyer_hp = 100;
 
@@ -81,35 +85,35 @@ int update_fireball_count = 0;
 
 int main(int argc, char** argv){
 
-	/*inicijalizacija biblioteke i prozora*/
-	glutInit(&argc, argv);
+    /*inicijalizacija biblioteke i prozora*/
+    glutInit(&argc, argv);
 
-	glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
+    glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
 
-	glutInitWindowSize(1800, 1000);
-	glutInitWindowPosition(100, 100);
+    glutInitWindowSize(1800, 1000);
+    glutInitWindowPosition(100, 100);
 
-	glutCreateWindow(argv[0]);
+    glutCreateWindow(argv[0]);
 
-	/*glutFullScreen();*/
+    glutFullScreen();
 
-	glutDisplayFunc(on_display);
-	glutReshapeFunc(on_reshape);
-	glutKeyboardFunc(on_keyboard);
+    glutDisplayFunc(on_display);
+    glutReshapeFunc(on_reshape);
+    glutKeyboardFunc(on_keyboard);
     glutSpecialFunc(on_special_key_press);
     glutSetCursor(GLUT_CURSOR_NONE);
 
-	/*osvetljenje*/
-	GLfloat light_ambient[] = {0.3, 0.3, 0.3, 0.7};
-	GLfloat light_diffuse[] = {0.5, 0.5, 0.5, 0.7};
-	GLfloat light_specular[] = {1, 1, 1, 1};
+    /*osvetljenje*/
+    GLfloat light_ambient[] = {0.3, 0.3, 0.3, 0.7};
+    GLfloat light_diffuse[] = {0.5, 0.5, 0.5, 0.7};
+    GLfloat light_specular[] = {1, 1, 1, 1};
 
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
 
-	GLfloat light_position[] = {-3, 10, -4, 0};
+    GLfloat light_position[] = {-3, 10, -4, 0};
 
-	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
     glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
     glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, 0);
@@ -124,7 +128,7 @@ int main(int argc, char** argv){
     glLineWidth(2);
 
     /*teksture*/
-    initialize_texures();
+    initialize_textures();
 
     glutMainLoop();
 
@@ -133,81 +137,90 @@ int main(int argc, char** argv){
 
 void on_display(){
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	static GLfloat light_position[] = {-5, 5, -1, 0};
-	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    static GLfloat light_position[] = {-5, 5, -1, 0};
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 
-	glMatrixMode(GL_MODELVIEW);
+    glMatrixMode(GL_MODELVIEW);
 
-	glLoadIdentity();
+    glLoadIdentity();
 
-	gluLookAt(0, 6, 10, 0, 0, 0, 0, 1, 0);
+    /*gluLookAt(0, 6, 10, 0, 0, 0, 0, 1, 0);*/
 
-	glRotatef(0+10*h, 0, 1, 0);
+    glRotatef(0+10*h, 0, 1, 0);
     glRotatef(0+10*v, 0, 0, 1);
 
-    draw_background();
+    draw_start();
 
-    draw_track();
-
-    if(g_game_active){
-        glutTimerFunc(5, update_xwing, 0);
-        glutTimerFunc(100, update_enemy_laser, 1);
+    if(g_draw_start){
+        gluLookAt(0, 0, 15, 0, 0, 0, 0, 1, 0);
+        draw_start();
     }
+    else{
+        gluLookAt(0, 6, 10, 0, 0, 0, 0, 1, 0);
 
-    draw_xwing(translacija, rotacija);
+        draw_background();
 
-    draw_stardestroyer();
-    draw_health_bar(g_star_destroyer_hp);
+        draw_track();
 
-    if(g_al_shoot){
+        if(g_game_active){
+            glutTimerFunc(5, update_xwing, 0);
+            glutTimerFunc(100, update_enemy_laser, 1);
+        }
+
+        draw_xwing(translacija, rotacija);
+
+        draw_stardestroyer();
+        draw_health_bar(g_star_destroyer_hp);
+
+        if(g_al_shoot){
 
 
-        if(!g_al_in_flight)
-            g_al_lane = g_current_pos;
+            if(!g_al_in_flight)
+                g_al_lane = g_current_pos;
 
-        draw_ally_laser(g_al_lane, g_al_position);
-        glutTimerFunc(60, update_ally_laser, 3);
+            draw_ally_laser(g_al_lane, g_al_position);
+            glutTimerFunc(60, update_ally_laser, 3);
 
+        }
+
+        if(!g_el_in_flight){
+            g_el_in_flight = 1;
+            g_el_lane = g_current_pos;
+        }
+
+        draw_enemy_laser(g_el_lane, g_el_position);
+
+        if(g_poraz){
+            draw_l_fireball(g_current_hitbox, fireball_size);
+            glutTimerFunc(5, update_fireball, 2);
+        }
+
+        if(g_pobeda){
+            draw_w_fireball(fireball_size);
+            glutTimerFunc(5, update_fireball, 2);
+        }
     }
-
-    if(!g_el_in_flight){
-        g_el_in_flight = 1;
-        g_el_lane = g_current_pos;
-    }
-
-    draw_enemy_laser(g_el_lane, g_el_position);
-
-    if(g_poraz){
-        draw_l_fireball(g_current_hitbox, fireball_size);
-        glutTimerFunc(5, update_fireball, 2);
-    }
-
-    if(g_pobeda){
-    	draw_w_fireball(fireball_size);
-    	glutTimerFunc(5, update_fireball, 2);
-    }
-    
 
     glRotatef(-0+10*h, 0, 1, 0);
     glRotatef(-0+10*v, 0, 0, 1);
 
-	glutSwapBuffers();
+    glutSwapBuffers();
 }
 
 static void on_reshape(int width, int height){
 
-	glViewport(0, 0, width, height);
+    glViewport(0, 0, width, height);
 
-	glMatrixMode(GL_PROJECTION);
+    glMatrixMode(GL_PROJECTION);
 
-	glLoadIdentity();
+    glLoadIdentity();
 
-	gluPerspective(60, (float) width / height, 0.01, 1500);
+    gluPerspective(60, (float) width / height, 0.01, 1500);
 
-	window_width = width;
-	window_height = height;
+    window_width = width;
+    window_height = height;
 }
 
 /*programiranje dugmica*/
@@ -215,9 +228,9 @@ static void on_keyboard(unsigned char key, int x, int y)
 {
     switch (key) {
     case 27:
-    	/*na esc se prekida program*/
-    	/*oslobadjanje resursa za teksture*/
-    	glDeleteTextures(2, names);
+        /*na esc se prekida program*/
+        /*oslobadjanje resursa za teksture*/
+        glDeleteTextures(2, names);
         exit(0);
         break;
     case 'h':
@@ -266,6 +279,7 @@ static void on_keyboard(unsigned char key, int x, int y)
     case 'g':
         if(!g_game_active){
             g_game_active = 1;
+            g_draw_start = 0;
             glutPostRedisplay();
         }
     case 'r':
@@ -398,8 +412,8 @@ void update_xwing(int value){
 /*funkcija za osvezavanje pozicije neprijateljskog lasera*/
 void update_enemy_laser(int value){
 
-	if(value != 1)
-		return;
+    if(value != 1)
+        return;
 
     if(!g_game_active)
         return;
@@ -433,8 +447,8 @@ void update_enemy_laser(int value){
 /*funkcija za osvezavanje pozicije neprijateljskog lasera*/
 void update_ally_laser(int value){
 
-	if(value != 3)
-		return;
+    if(value != 3)
+        return;
 
     if(!g_game_active)
         return;
@@ -477,8 +491,8 @@ void update_ally_laser(int value){
 /*funkcija za osvezavanje eksplozije*/
 void update_fireball(int value){
 
-	if(value != 2)
-		return;
+    if(value != 2)
+        return;
 
     if(update_fireball_count >= 60){
         return;
@@ -493,7 +507,7 @@ void update_fireball(int value){
 
 
 /*funkcija koja inicijalizuje teksture*/
-void initialize_texures(void){
+void initialize_textures(void){
 
     Image* image;
 
@@ -508,9 +522,19 @@ void initialize_texures(void){
     /*Kreira se tekstura*/
     image_read(image, FILENAME0);
 
-    glGenTextures(1, names);
+    glGenTextures(4, names);
 
     glBindTexture(GL_TEXTURE_2D, names[0]);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->width, image->height, 0, GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
+
+    image_read(image, FILENAME1);
+
+    glBindTexture(GL_TEXTURE_2D, names[1]);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
@@ -530,7 +554,7 @@ void initialize_texures(void){
 /*funkcija koja iscrtava pozadinu*/
 void draw_background(void){
 
-	glEnable(GL_TEXTURE_2D);
+    glEnable(GL_TEXTURE_2D);
 
     glPushMatrix();
 
@@ -538,26 +562,61 @@ void draw_background(void){
 
     glRotatef(-30, 1, 0, 0);
 
-	glBindTexture(GL_TEXTURE_2D, names[0]);
-	glBegin(GL_QUADS);
-		glNormal3f(0, 0, 1);
+    glBindTexture(GL_TEXTURE_2D, names[0]);
+    glBegin(GL_QUADS);
+        glNormal3f(0, 0, 1);
 
         /*120x67 zbog 1920x1080*/
-		glTexCoord2f(0, 0);
-		glVertex3f(-60, 34, 0);
+        glTexCoord2f(0, 0);
+        glVertex3f(-60, 34, 0);
 
-		glTexCoord2f(0, 1);
-		glVertex3f(60, 34, 0);
+        glTexCoord2f(0, 1);
+        glVertex3f(60, 34, 0);
 
-		glTexCoord2f(1, 1);
-		glVertex3f(60, -34, 0);
+        glTexCoord2f(1, 1);
+        glVertex3f(60, -34, 0);
 
-		glTexCoord2f(1, 0);
-		glVertex3f(-60, -34, 0);
-	glEnd();
+        glTexCoord2f(1, 0);
+        glVertex3f(-60, -34, 0);
+    glEnd();
 
     glPopMatrix();
 
-	glBindTexture(GL_TEXTURE_2D, 0);
+    glBindTexture(GL_TEXTURE_2D, 0);
 
+}
+
+void draw_start(void){
+
+    glEnable(GL_TEXTURE_2D);
+
+    glPushMatrix();
+
+    glScalef(1, 0.3, 1);
+
+    glTranslatef(-1.5, 1, 0);
+
+    glRotatef(90, 0, 0, 1);
+
+    glBindTexture(GL_TEXTURE_2D, names[1]);
+    glBegin(GL_QUADS);
+        glNormal3f(0, 0, 1);
+
+        /*120x67 zbog 1920x1080*/
+        glTexCoord2f(0, 0);
+        glVertex3f(-30, 17, 0);
+
+        glTexCoord2f(0, 1);
+        glVertex3f(30, 17, 0);
+
+        glTexCoord2f(1, 1);
+        glVertex3f(30, -17, 0);
+
+        glTexCoord2f(1, 0);
+        glVertex3f(-30, -17, 0);
+    glEnd();
+
+    glPopMatrix();
+
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
