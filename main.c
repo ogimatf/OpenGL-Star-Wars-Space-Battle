@@ -297,17 +297,23 @@ static void on_keyboard(unsigned char key, int x, int y)
             g_draw_start = 0;
             glutPostRedisplay();
         }
+        break;
     case 'r':
         /*reset*/
 
-        g_game_active = 1;
+        g_game_active = 0;
         g_poraz = 0;
         g_pobeda = 0;
+        g_draw_start = 1;
+        g_draw_won = 0;
+        g_draw_loss = 0;
+
         g_star_destroyer_hp = 100;
         /*pracenje tekuce i zeljene pozicije xwing-a u odnosu na staze*/
         g_current_pos = 0;
         g_desired_pos = 0;
         g_current_hitbox = 0;
+        g_in_transition = 0;
 
         /*pozicija neprijateljskog lasera*/
         g_el_position = -15;
