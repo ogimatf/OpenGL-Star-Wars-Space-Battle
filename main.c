@@ -15,15 +15,21 @@ static void on_reshape(int width, int height);
 static void on_keyboard(unsigned char key, int x, int y);
 static void on_special_key_press(int key, int x, int y);
 
-void draw_background();
+/*inicijalizuje teksture*/
+void initialize_texures(void);
 
+/*crta pozadinu*/
+void draw_background(void);
+
+/*azuriranje polozaja objekata*/
 void update_xwing(int value);
 void update_enemy_laser(int value);
 void update_ally_laser(int value);
 void update_fireball(int value);
 
-void left();
-void right();
+/*promena staze*/
+void left(void);
+void right(void);
 
 /*imena fajla sa teksturama*/
 #define FILENAME0 "space.bmp"
@@ -45,6 +51,7 @@ int g_star_destroyer_hp = 100;
 int g_current_pos = 0;
 int g_desired_pos = 0;
 int g_current_hitbox = 0;
+int g_in_transition = 0;
 /*brojac azuriranja xwinga*/
 int update_xwing_count = 0;
 
@@ -117,35 +124,7 @@ int main(int argc, char** argv){
     glLineWidth(2);
 
     /*teksture*/
-
-    Image* image;
-
-    glClearColor(0, 0, 0, 0);
-
-    glEnable(GL_TEXTURE_2D);
-
-    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-
-    image = image_init(0, 0);
-
-    /*Kreira se tekstura*/
-    image_read(image, FILENAME0);
-
-    glGenTextures(1, names);
-
-    glBindTexture(GL_TEXTURE_2D, names[0]);
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->width, image->height, 0, GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
-
-    /*iskljucujemo aktivnu teksturu*/
-    glBindTexture(GL_TEXTURE_2D, 0);
-
-    /*brise objekat za citanje tekstura iz fajla*/
-    image_done(image);
+    initialize_texures();
 
     glutMainLoop();
 
@@ -353,8 +332,10 @@ static void on_special_key_press(int key, int x, int y){
 /*skretanje u traku levo*/
 void left(){
 
-    if(g_current_pos != -1)
+    if(g_current_pos != -1){
         g_desired_pos -= 1;
+        g_in_transition = 1;
+    }
 
     glutPostRedisplay();
 
@@ -364,8 +345,10 @@ void left(){
 /*skretanje u traku desno*/
 void right(){
 
-    if(g_current_pos != +1)
+    if(g_current_pos != +1){
         g_desired_pos += 1;
+        g_in_transition = 1;
+    }
 
     glutPostRedisplay();
 
@@ -386,6 +369,7 @@ void update_xwing(int value){
         if(update_xwing_count >= 60){
             update_xwing_count = 0;
             g_current_pos = g_desired_pos;
+            g_in_transition = 0;
             return;
         }
         else{
@@ -508,8 +492,43 @@ void update_fireball(int value){
 }
 
 
+/*funkcija koja inicijalizuje teksture*/
+void initialize_texures(void){
+
+    Image* image;
+
+    glClearColor(0, 0, 0, 0);
+
+    glEnable(GL_TEXTURE_2D);
+
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+
+    image = image_init(0, 0);
+
+    /*Kreira se tekstura*/
+    image_read(image, FILENAME0);
+
+    glGenTextures(1, names);
+
+    glBindTexture(GL_TEXTURE_2D, names[0]);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->width, image->height, 0, GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
+
+    /*iskljucujemo aktivnu teksturu*/
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    /*brise objekat za citanje tekstura iz fajla*/
+    image_done(image);
+
+}
+
+
 /*funkcija koja iscrtava pozadinu*/
-void draw_background(){
+void draw_background(void){
 
 	glEnable(GL_TEXTURE_2D);
 
