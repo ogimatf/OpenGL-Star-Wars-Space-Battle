@@ -102,7 +102,7 @@ int main(int argc, char** argv){
 
     glutCreateWindow(argv[0]);
 
-    /*glutFullScreen();*/
+    glutFullScreen();
 
     glutDisplayFunc(on_display);
     glutReshapeFunc(on_reshape);
