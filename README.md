@@ -21,3 +21,5 @@ cd RG46-star-wars-space-battle
 make
 ./star-wars-sb
 ```
+
+![](https://github.com/ogimatf/OpenGL-Star-Wars-Space-Battle/blob/master/Screenshots/week6_victory.gif?raw=true)
